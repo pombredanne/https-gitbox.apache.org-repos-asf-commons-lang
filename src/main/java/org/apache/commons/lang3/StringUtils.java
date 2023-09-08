@@ -5130,7 +5130,7 @@ public class StringUtils {
      * an exception. An empty String is returned if len is negative.</p>
      *
      * <pre>
-     * StringUtils.left(null, *)    = null
+     * StringUtils.left(null, *)    = ""
      * StringUtils.left(*, -ve)     = ""
      * StringUtils.left("", *)      = ""
      * StringUtils.left("abc", 0)   = ""
@@ -5140,13 +5140,10 @@ public class StringUtils {
      *
      * @param str  the String to get the leftmost characters from, may be null
      * @param len  the length of the required String
-     * @return the leftmost characters, {@code null} if null String input
+     * @return the leftmost characters, {@code EMPTY} if null String input
      */
     public static String left(final String str, final int len) {
-        if (str == null) {
-            return null;
-        }
-        if (len < 0) {
+        if (str == null || len < 0) {
             return EMPTY;
         }
         if (str.length() <= len) {
@@ -5397,7 +5394,7 @@ public class StringUtils {
      * length of {@code str}.</p>
      *
      * <pre>
-     * StringUtils.mid(null, *, *)    = null
+     * StringUtils.mid(null, *, *)    = ""
      * StringUtils.mid(*, *, -ve)     = ""
      * StringUtils.mid("", 0, *)      = ""
      * StringUtils.mid("abc", 0, 2)   = "ab"
@@ -5413,10 +5410,7 @@ public class StringUtils {
      * @return the middle characters, {@code null} if null String input
      */
     public static String mid(final String str, int pos, final int len) {
-        if (str == null) {
-            return null;
-        }
-        if (len < 0 || pos > str.length()) {
+        if (str == null || len < 0 || pos > str.length()) {
             return EMPTY;
         }
         if (pos < 0) {
@@ -7066,7 +7060,7 @@ public class StringUtils {
      * an exception. An empty String is returned if len is negative.</p>
      *
      * <pre>
-     * StringUtils.right(null, *)    = null
+     * StringUtils.right(null, *)    = ""
      * StringUtils.right(*, -ve)     = ""
      * StringUtils.right("", *)      = ""
      * StringUtils.right("abc", 0)   = ""
@@ -7076,13 +7070,10 @@ public class StringUtils {
      *
      * @param str  the String to get the rightmost characters from, may be null
      * @param len  the length of the required String
-     * @return the rightmost characters, {@code null} if null String input
+     * @return the rightmost characters, {@code EMPTY} if null String input
      */
     public static String right(final String str, final int len) {
-        if (str == null) {
-            return null;
-        }
-        if (len < 0) {
+        if (str == null || len < 0) {
             return EMPTY;
         }
         if (str.length() <= len) {

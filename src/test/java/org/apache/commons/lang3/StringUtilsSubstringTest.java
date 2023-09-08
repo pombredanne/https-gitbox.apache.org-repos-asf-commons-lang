@@ -74,9 +74,9 @@ public class StringUtilsSubstringTest extends AbstractLangTest {
 
     @Test
     public void testLeft_String() {
-        assertSame(null, StringUtils.left(null, -1));
-        assertSame(null, StringUtils.left(null, 0));
-        assertSame(null, StringUtils.left(null, 2));
+        assertSame("", StringUtils.left(null, -1));
+        assertSame("", StringUtils.left(null, 0));
+        assertSame("", StringUtils.left(null, 2));
 
         assertEquals("", StringUtils.left("", -1));
         assertEquals("", StringUtils.left("", 0));
@@ -90,9 +90,9 @@ public class StringUtilsSubstringTest extends AbstractLangTest {
 
     @Test
     public void testRight_String() {
-        assertSame(null, StringUtils.right(null, -1));
-        assertSame(null, StringUtils.right(null, 0));
-        assertSame(null, StringUtils.right(null, 2));
+        assertSame("", StringUtils.right(null, -1));
+        assertSame("", StringUtils.right(null, 0));
+        assertSame("", StringUtils.right(null, 2));
 
         assertEquals("", StringUtils.right("", -1));
         assertEquals("", StringUtils.right("", 0));
@@ -106,10 +106,10 @@ public class StringUtilsSubstringTest extends AbstractLangTest {
 
     @Test
     public void testMid_String() {
-        assertSame(null, StringUtils.mid(null, -1, 0));
-        assertSame(null, StringUtils.mid(null, 0, -1));
-        assertSame(null, StringUtils.mid(null, 3, 0));
-        assertSame(null, StringUtils.mid(null, 3, 2));
+        assertSame("", StringUtils.mid(null, -1, 0));
+        assertSame("", StringUtils.mid(null, 0, -1));
+        assertSame("", StringUtils.mid(null, 3, 0));
+        assertSame("", StringUtils.mid(null, 3, 2));
 
         assertEquals("", StringUtils.mid("", 0, -1));
         assertEquals("", StringUtils.mid("", 0, 0));
