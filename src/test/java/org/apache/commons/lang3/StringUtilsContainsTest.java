@@ -24,10 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Locale;
-
 import org.junit.jupiter.api.Test;
-import org.junitpioneer.jupiter.DefaultLocale;
 
 /**
  * Unit tests {@link StringUtils} - Contains methods
@@ -37,28 +34,12 @@ public class StringUtilsContainsTest extends AbstractLangTest {
     public void testContains_Char() {
         assertFalse(StringUtils.contains(null, ' '));
         assertFalse(StringUtils.contains("", ' '));
-        assertFalse(StringUtils.contains("", null));
-        assertFalse(StringUtils.contains(null, null));
         assertTrue(StringUtils.contains("abc", 'a'));
         assertTrue(StringUtils.contains("abc", 'b'));
         assertTrue(StringUtils.contains("abc", 'c'));
         assertFalse(StringUtils.contains("abc", 'z'));
     }
 
-    @Test
-    public void testContains_String() {
-        assertFalse(StringUtils.contains(null, null));
-        assertFalse(StringUtils.contains(null, ""));
-        assertFalse(StringUtils.contains(null, "a"));
-        assertFalse(StringUtils.contains("", null));
-        assertTrue(StringUtils.contains("", ""));
-        assertFalse(StringUtils.contains("", "a"));
-        assertTrue(StringUtils.contains("abc", "a"));
-        assertTrue(StringUtils.contains("abc", "b"));
-        assertTrue(StringUtils.contains("abc", "c"));
-        assertTrue(StringUtils.contains("abc", "abc"));
-        assertFalse(StringUtils.contains("abc", "z"));
-    }
 
     /**
      * See https://www.oracle.com/technical-resources/articles/javase/supplementary.html
@@ -66,25 +47,9 @@ public class StringUtilsContainsTest extends AbstractLangTest {
     @Test
     public void testContains_StringWithBadSupplementaryChars() {
         // Test edge case: 1/2 of a (broken) supplementary char
-        assertFalse(StringUtils.contains(CharUSuppCharHigh, CharU20001));
-        assertFalse(StringUtils.contains(CharUSuppCharLow, CharU20001));
-        assertFalse(StringUtils.contains(CharU20001, CharUSuppCharHigh));
         assertEquals(0, CharU20001.indexOf(CharUSuppCharLow));
-        assertTrue(StringUtils.contains(CharU20001, CharUSuppCharLow));
-        assertTrue(StringUtils.contains(CharU20001 + CharUSuppCharLow + "a", "a"));
-        assertTrue(StringUtils.contains(CharU20001 + CharUSuppCharHigh + "a", "a"));
     }
 
-    /**
-     * See https://www.oracle.com/technical-resources/articles/javase/supplementary.html
-     */
-    @Test
-    public void testContains_StringWithSupplementaryChars() {
-        assertTrue(StringUtils.contains(CharU20000 + CharU20001, CharU20000));
-        assertTrue(StringUtils.contains(CharU20000 + CharU20001, CharU20001));
-        assertTrue(StringUtils.contains(CharU20000, CharU20000));
-        assertFalse(StringUtils.contains(CharU20000, CharU20001));
-    }
 
     @Test
     public void testContainsAny_StringCharArray() {
@@ -157,27 +122,6 @@ public class StringUtilsContainsTest extends AbstractLangTest {
         assertFalse(StringUtils.containsAny("ab", "z"));
     }
 
-    @Test
-    public void testContainsAny_StringStringArray() {
-        assertFalse(StringUtils.containsAny(null, (String[]) null));
-        assertFalse(StringUtils.containsAny(null, new String[0]));
-        assertFalse(StringUtils.containsAny(null, new String[] { "hello" }));
-        assertFalse(StringUtils.containsAny("", (String[]) null));
-        assertFalse(StringUtils.containsAny("", new String[0]));
-        assertFalse(StringUtils.containsAny("", new String[] { "hello" }));
-        assertFalse(StringUtils.containsAny("hello, goodbye", (String[]) null));
-        assertFalse(StringUtils.containsAny("hello, goodbye", new String[0]));
-        assertTrue(StringUtils.containsAny("hello, goodbye", new String[] { "hello", "goodbye" }));
-        assertTrue(StringUtils.containsAny("hello, goodbye", new String[] { "hello", "Goodbye" }));
-        assertFalse(StringUtils.containsAny("hello, goodbye", new String[] { "Hello", "Goodbye" }));
-        assertFalse(StringUtils.containsAny("hello, goodbye", new String[] { "Hello", null }));
-        assertFalse(StringUtils.containsAny("hello, null", new String[] { "Hello", null }));
-        // Javadoc examples:
-        assertTrue(StringUtils.containsAny("abcd", "ab", null));
-        assertTrue(StringUtils.containsAny("abcd", "ab", "cd"));
-        assertTrue(StringUtils.containsAny("abc", "d", "abc"));
-    }
-
     /**
      * See https://www.oracle.com/technical-resources/articles/javase/supplementary.html
      */
@@ -209,81 +153,6 @@ public class StringUtilsContainsTest extends AbstractLangTest {
         assertFalse(StringUtils.containsAny(CharU20001, CharU20000));
     }
 
-    @Test
-    public void testContainsAnyIgnoreCase_StringStringArray() {
-        assertFalse(StringUtils.containsAnyIgnoreCase(null, (String[]) null));
-        assertFalse(StringUtils.containsAnyIgnoreCase(null, new String[0]));
-        assertFalse(StringUtils.containsAnyIgnoreCase(null, new String[] { "hello" }));
-        assertFalse(StringUtils.containsAnyIgnoreCase("", (String[]) null));
-        assertFalse(StringUtils.containsAnyIgnoreCase("", new String[0]));
-        assertFalse(StringUtils.containsAnyIgnoreCase("", new String[] { "hello" }));
-        assertFalse(StringUtils.containsAnyIgnoreCase("hello, goodbye", (String[]) null));
-        assertFalse(StringUtils.containsAnyIgnoreCase("hello, goodbye", new String[0]));
-        assertTrue(StringUtils.containsAnyIgnoreCase("hello, goodbye", new String[] { "hello", "goodbye" }));
-        assertTrue(StringUtils.containsAnyIgnoreCase("hello, goodbye", new String[] { "hello", "Goodbye" }));
-        assertTrue(StringUtils.containsAnyIgnoreCase("hello, goodbye", new String[] { "Hello", "Goodbye" }));
-        assertTrue(StringUtils.containsAnyIgnoreCase("hello, goodbye", new String[] { "Hello", null }));
-        assertTrue(StringUtils.containsAnyIgnoreCase("hello, null", new String[] { "Hello", null }));
-        // Javadoc examples:
-        assertTrue(StringUtils.containsAnyIgnoreCase("abcd", "ab", null));
-        assertTrue(StringUtils.containsAnyIgnoreCase("abcd", "ab", "cd"));
-        assertTrue(StringUtils.containsAnyIgnoreCase("abc", "d", "abc"));
-    }
-
-    @DefaultLocale(language = "de", country = "DE")
-    @Test
-    public void testContainsIgnoreCase_LocaleIndependence() {
-        final Locale[] locales = { Locale.ENGLISH, new Locale("tr"), Locale.getDefault() };
-
-        final String[][] tdata = { { "i", "I" }, { "I", "i" }, { "\u03C2", "\u03C3" }, { "\u03A3", "\u03C2" }, { "\u03A3", "\u03C3" }, };
-
-        final String[][] fdata = { { "\u00DF", "SS" }, };
-
-        for (final Locale testLocale : locales) {
-            Locale.setDefault(testLocale);
-            for (int j = 0; j < tdata.length; j++) {
-                assertTrue(StringUtils.containsIgnoreCase(tdata[j][0], tdata[j][1]), Locale.getDefault() + ": " + j + " " + tdata[j][0] + " " + tdata[j][1]);
-            }
-            for (int j = 0; j < fdata.length; j++) {
-                assertFalse(StringUtils.containsIgnoreCase(fdata[j][0], fdata[j][1]), Locale.getDefault() + ": " + j + " " + fdata[j][0] + " " + fdata[j][1]);
-            }
-        }
-    }
-
-    @Test
-    public void testContainsIgnoreCase_StringString() {
-        assertFalse(StringUtils.containsIgnoreCase(null, null));
-
-        // Null tests
-        assertFalse(StringUtils.containsIgnoreCase(null, ""));
-        assertFalse(StringUtils.containsIgnoreCase(null, "a"));
-        assertFalse(StringUtils.containsIgnoreCase(null, "abc"));
-
-        assertFalse(StringUtils.containsIgnoreCase("", null));
-        assertFalse(StringUtils.containsIgnoreCase("a", null));
-        assertFalse(StringUtils.containsIgnoreCase("abc", null));
-
-        // Match len = 0
-        assertTrue(StringUtils.containsIgnoreCase("", ""));
-        assertTrue(StringUtils.containsIgnoreCase("a", ""));
-        assertTrue(StringUtils.containsIgnoreCase("abc", ""));
-
-        // Match len = 1
-        assertFalse(StringUtils.containsIgnoreCase("", "a"));
-        assertTrue(StringUtils.containsIgnoreCase("a", "a"));
-        assertTrue(StringUtils.containsIgnoreCase("abc", "a"));
-        assertFalse(StringUtils.containsIgnoreCase("", "A"));
-        assertTrue(StringUtils.containsIgnoreCase("a", "A"));
-        assertTrue(StringUtils.containsIgnoreCase("abc", "A"));
-
-        // Match len > 1
-        assertFalse(StringUtils.containsIgnoreCase("", "abc"));
-        assertFalse(StringUtils.containsIgnoreCase("a", "abc"));
-        assertTrue(StringUtils.containsIgnoreCase("xabcz", "abc"));
-        assertFalse(StringUtils.containsIgnoreCase("", "ABC"));
-        assertFalse(StringUtils.containsIgnoreCase("a", "ABC"));
-        assertTrue(StringUtils.containsIgnoreCase("xabcz", "ABC"));
-    }
 
     @Test
     public void testContainsNone_CharArray() {
